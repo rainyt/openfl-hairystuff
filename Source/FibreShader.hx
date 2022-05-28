@@ -1,10 +1,15 @@
+import glsl.Sampler2D;
+import glsl.GLSL.texture2D;
 import glsl.OpenFLGraphicsShader;
 import VectorMath;
 
 class FibreShader extends OpenFLGraphicsShader {
-	@:attribute public var noiseFactor:Float;
-
+	// @:attribute public var noiseFactor:Float;
 	@:attribute public var pos:Vec2;
+
+	@:uniform public var time:Float;
+
+	@:uniform public var bitmap2:Sampler2D;
 
 	/**
 	 * 舞台尺寸以及全局透明度
@@ -79,13 +84,16 @@ class FibreShader extends OpenFLGraphicsShader {
 	public function new() {
 		super();
 		a_pos.value = [];
-		a_noiseFactor.value = [];
+		// a_noiseFactor.value = [];
 		u_stageSize.value = [];
+		u_time.value = [0];
 	}
 
 	override function vertex() {
 		super.vertex();
 		// var t:Mat4 = translation(1, 1);
+		var noice:Vec4 = texture2D(bitmap2, fract(pos / 2.8 / 100. + time));
+		var noiseFactor:Float = noice.x;
 		var radians:Float = noiseFactor * (2 * 3.14);
 		var d:Mat4 = rotaion(radians, vec3(0, 0, 1), vec3(0, 0, 0));
 		var mat:Mat4 = gl_openfl_Matrix;

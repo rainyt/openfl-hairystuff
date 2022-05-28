@@ -1,3 +1,4 @@
+import openfl.display.Bitmap;
 import openfl.display.BitmapData;
 import openfl.Vector;
 import haxe.Timer;
@@ -24,15 +25,21 @@ class FibreBrick extends Sprite {
 
 	var currentShader = new FibreShader();
 
+	var noiceBitmap:BitmapData;
+
 	public function new(width_amount:Int, height_amount:Int) {
 		super();
 		this.width_amount = width_amount;
 		this.height_amount = height_amount;
+		noiceBitmap = new BitmapData(width_amount, height_amount);
 		for (x in 0...width_amount) {
 			var temp_arr = new Array<Fibre>();
 			for (y in 0...height_amount) {
 				var fibre = new Fibre(x * 2.8, y * 2.8);
 				temp_arr.push(fibre);
+				var factor = noise(x / 15, y / 15);
+				var c = StringTools.hex(Std.int(factor * 255));
+				noiceBitmap.setPixel(x, y, Std.parseInt("0x" + c + c + c));
 			}
 			brick.push(temp_arr);
 		}
@@ -43,7 +50,10 @@ class FibreBrick extends Sprite {
 		trace("currentShader.data.bitmap=", currentShader.data.bitmap);
 		// currentShader.data.bitmap.input = null;
 
+		currentShader.u_bitmap2.input = noiceBitmap;
+
 		this.graphics.beginShaderFill(currentShader);
+
 		// this.graphics.beginFill(0xff0000);
 		// this.graphics.drawRect(0, 0, 100, 100);
 
@@ -91,6 +101,8 @@ class FibreBrick extends Sprite {
 
 		this.addEventListener(Event.ENTER_FRAME, onFrameEvent);
 
+		var b = new Bitmap(noiceBitmap);
+		this.addChild(b);
 		// this.shader = currentShader;
 	}
 
@@ -98,17 +110,19 @@ class FibreBrick extends Sprite {
 
 	private function onFrameEvent(e:Event):Void {
 		var now = Timer.stamp();
-		update(now - delta);
+		// update(now - delta);
+		currentShader.u_time.value[0] += 0.0005;
+		// currentShader.u_time.value[0] += now - delta;
 		delta = now;
-		var index = 0;
-		for (array in brick) {
-			for (fibre in array) {
-				for (i in 0...6) {
-					currentShader.a_noiseFactor.value[index * 6 + i] = fibre.alpha;
-				}
-				index++;
-			}
-		}
+		// var index = 0;
+		// for (array in brick) {
+		// 	for (fibre in array) {
+		// 		for (i in 0...6) {
+		// 			currentShader.a_noiseFactor.value[index * 6 + i] = fibre.alpha;
+		// 		}
+		// 		index++;
+		// 	}
+		// }
 		currentShader.u_stageSize.value[0] = stage.stageWidth;
 		currentShader.u_stageSize.value[1] = stage.stageHeight;
 		@:privateAccess for (index => value in this.graphics.__usedShaderBuffers) {
