@@ -6,3 +6,6 @@
 
 ## openfl-glsl
 请使用git版本，确保最新可运行环境：https://github.com/rainyt/openfl-glsl
+
+## 效果
+![](img.gif)

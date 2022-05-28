@@ -31,15 +31,21 @@ class FibreBrick extends Sprite {
 		super();
 		this.width_amount = width_amount;
 		this.height_amount = height_amount;
-		noiceBitmap = new BitmapData(width_amount, height_amount);
+		var size = Std.int(width_amount * 2.8);
+		noiceBitmap = new BitmapData(size, size);
+		for (ix in 0...size) {
+			for (iy in 0...size) {
+				var factor = noise(ix / 10, iy / 10);
+				var c = StringTools.hex(Std.int(factor * 255));
+				noiceBitmap.setPixel(ix, iy, Std.parseInt("0x" + c + c + c));
+			}
+		}
+
 		for (x in 0...width_amount) {
 			var temp_arr = new Array<Fibre>();
 			for (y in 0...height_amount) {
 				var fibre = new Fibre(x * 2.8, y * 2.8);
 				temp_arr.push(fibre);
-				var factor = noise(x / 10, y / 10);
-				var c = StringTools.hex(Std.int(factor * 255));
-				noiceBitmap.setPixel(x, y, Std.parseInt("0x" + c + c + c));
 			}
 			brick.push(temp_arr);
 		}
@@ -111,7 +117,7 @@ class FibreBrick extends Sprite {
 	private function onFrameEvent(e:Event):Void {
 		var now = Timer.stamp();
 		// update(now - delta);
-		currentShader.u_time.value[0] += 1 / width_amount / 3;
+		currentShader.u_time.value[0] += 1 / 2000;
 		// currentShader.u_time.value[0] += now - delta;
 		delta = now;
 		// var index = 0;
