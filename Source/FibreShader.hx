@@ -1,7 +1,7 @@
-import glsl.OpenFLShader;
+import glsl.OpenFLGraphicsShader;
 import VectorMath;
 
-class FibreShader extends OpenFLShader {
+class FibreShader extends OpenFLGraphicsShader {
 	@:attribute public var noiseFactor:Float;
 
 	@:attribute public var pos:Vec2;
@@ -103,5 +103,6 @@ class FibreShader extends OpenFLShader {
 
 	override function fragment() {
 		this.gl_FragColor = vec4(vNoiseFactor, vNoiseFactor, vNoiseFactor, 1) * vNoiseFactor;
+		// this.gl_FragColor = vec4(1, 0, 0, 1);
 	}
 }

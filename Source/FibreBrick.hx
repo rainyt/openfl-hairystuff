@@ -1,3 +1,4 @@
+import openfl.display.BitmapData;
 import openfl.Vector;
 import haxe.Timer;
 import openfl.events.Event;
@@ -38,9 +39,16 @@ class FibreBrick extends Sprite {
 
 		// 绘制
 		this.graphics.clear();
+
+		trace("currentShader.data.bitmap=", currentShader.data.bitmap);
+		// currentShader.data.bitmap.input = null;
+
 		this.graphics.beginShaderFill(currentShader);
+		// this.graphics.beginFill(0xff0000);
+		// this.graphics.drawRect(0, 0, 100, 100);
 
 		var vertices:Vector<Float> = new Vector();
+		var uv:Vector<Float> = new Vector();
 		var triangles:Vector<Int> = new Vector();
 		var i = 0;
 		for (array in brick) {
@@ -67,19 +75,19 @@ class FibreBrick extends Sprite {
 					currentShader.a_pos.value[i * 12 + i2 * 2 + 0] = fibre.start_x;
 					currentShader.a_pos.value[i * 12 + i2 * 2 + 1] = fibre.start_y;
 				}
-				// uv.push(0);
-				// uv.push(0);
-				// uv.push(1);
-				// uv.push(0);
-				// uv.push(1);
-				// uv.push(1);
-				// uv.push(0);
-				// uv.push(1);
+				uv.push(0);
+				uv.push(0);
+				uv.push(1);
+				uv.push(0);
+				uv.push(1);
+				uv.push(1);
+				uv.push(0);
+				uv.push(1);
 				i++;
 			}
 		}
 
-		this.graphics.drawTriangles(vertices, triangles);
+		this.graphics.drawTriangles(vertices, triangles, uv);
 
 		this.addEventListener(Event.ENTER_FRAME, onFrameEvent);
 
@@ -97,10 +105,6 @@ class FibreBrick extends Sprite {
 			for (fibre in array) {
 				for (i in 0...6) {
 					currentShader.a_noiseFactor.value[index * 6 + i] = fibre.alpha;
-					// for (i2 in 0...2) {
-					// 	currentShader.a_radians.value[index * 12 + i] = fibre.start_x;
-					// 	currentShader.a_radians.value[index * 12 + i] = fibre.start_y;
-					// }
 				}
 				index++;
 			}
@@ -111,7 +115,6 @@ class FibreBrick extends Sprite {
 			value.update(value.shader);
 			// ShaderBuffer.update(value, cast value.shader, updateAttr);
 		}
-		trace(currentShader.u_stageSize.value);
 		this.invalidate();
 	}
 
