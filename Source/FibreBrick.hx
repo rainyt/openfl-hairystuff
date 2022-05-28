@@ -111,7 +111,7 @@ class FibreBrick extends Sprite {
 	private function onFrameEvent(e:Event):Void {
 		var now = Timer.stamp();
 		// update(now - delta);
-		currentShader.u_time.value[0] += 1 / width_amount / 5;
+		currentShader.u_time.value[0] += 1 / width_amount / 3;
 		// currentShader.u_time.value[0] += now - delta;
 		delta = now;
 		// var index = 0;

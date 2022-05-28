@@ -94,6 +94,8 @@ class FibreShader extends OpenFLGraphicsShader {
 		// var t:Mat4 = translation(1, 1);
 		var noice:Vec4 = texture2D(bitmap2, fract(pos / 2.8 / 100. + time));
 		var noiseFactor:Float = noice.x;
+		noice = texture2D(bitmap2, fract(pos / 2.8 / 100. + time * noiseFactor));
+		noiseFactor = noice.x;
 		var radians:Float = noiseFactor * (2 * 3.14);
 		var d:Mat4 = rotaion(radians, vec3(0, 0, 1), vec3(0, 0, 0));
 		var mat:Mat4 = gl_openfl_Matrix;
