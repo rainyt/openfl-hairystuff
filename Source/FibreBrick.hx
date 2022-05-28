@@ -37,7 +37,7 @@ class FibreBrick extends Sprite {
 			for (y in 0...height_amount) {
 				var fibre = new Fibre(x * 2.8, y * 2.8);
 				temp_arr.push(fibre);
-				var factor = noise(x / 15, y / 15);
+				var factor = noise(x / 10, y / 10);
 				var c = StringTools.hex(Std.int(factor * 255));
 				noiceBitmap.setPixel(x, y, Std.parseInt("0x" + c + c + c));
 			}
@@ -111,7 +111,7 @@ class FibreBrick extends Sprite {
 	private function onFrameEvent(e:Event):Void {
 		var now = Timer.stamp();
 		// update(now - delta);
-		currentShader.u_time.value[0] += 0.0005;
+		currentShader.u_time.value[0] += 1 / width_amount / 5;
 		// currentShader.u_time.value[0] += now - delta;
 		delta = now;
 		// var index = 0;

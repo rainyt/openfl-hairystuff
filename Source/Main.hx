@@ -5,7 +5,7 @@ import openfl.display.FPS;
 import openfl.display.Sprite;
 
 class Main extends Sprite {
-	public var sprite:FibreBrick = new FibreBrick(500, 500);
+	public var sprite:FibreBrick = new FibreBrick(100, 100);
 
 	public function new() {
 		super();
