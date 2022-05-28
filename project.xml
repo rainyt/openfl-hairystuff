@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+
+	<meta title="HairyStuff" package="com.sample.hairystuff" version="1.0.0" company="Company Name" />
+	<app main="Main" path="Export" file="HairyStuff" />
+	<window allow-high-dpi="true" vsync="true" />
+	<source path="Source" />
+
+	<haxelib name="openfl-glsl" />
+
+	<haxelib name="openfl" />
+
+	<assets path="Assets" rename="assets" />
+
+	<define name="gl_stats" />
+
+
+</project>
