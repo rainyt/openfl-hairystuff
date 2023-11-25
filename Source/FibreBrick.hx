@@ -21,7 +21,7 @@ class FibreBrick extends Sprite {
 	var xOffset:Float = 0;
 	var yOffset:Float = 0;
 
-	var perlinNoise:Perlin = new Perlin();
+	var perlinNoise:Perlin = new Perlin(6);
 
 	var currentShader = new FibreShader();
 
@@ -31,7 +31,7 @@ class FibreBrick extends Sprite {
 		super();
 		this.width_amount = width_amount;
 		this.height_amount = height_amount;
-		var size = Std.int(width_amount * 2.8);
+		var size = 600;
 		noiceBitmap = new BitmapData(size, size);
 		for (ix in 0...size) {
 			for (iy in 0...size) {
@@ -157,7 +157,7 @@ class FibreBrick extends Sprite {
 	}
 
 	function noise(x:Float, ?y:Float = 0, ?z:Float = 0) {
-		return perlinNoise.OctavePerlin(x, y, z, 4, 0.55, 0.45);
+		return perlinNoise.OctavePerlin(x, y, z, 4, 0.5, 0.2);
 	}
 }
 

@@ -3,6 +3,7 @@ import glsl.GLSL.texture2D;
 import glsl.OpenFLGraphicsShader;
 import VectorMath;
 
+@:debug
 class FibreShader extends OpenFLGraphicsShader {
 	// @:attribute public var noiseFactor:Float;
 	@:attribute public var pos:Vec2;
